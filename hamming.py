@@ -1,20 +1,44 @@
+''' VERIFICA SOLO CADENAS DE 7 BITS '''
+def hamming(cadena):
+    print(cadena)
+    ## Primero Verificar es binarios y si tiene  7 bits 
+    binario = isBinario(cadena)
 
-cadena = 1100101
+    if binario:
+        ## Obtener los 4 bits de paridad
+		copyCadena = cadena.copy()
+		copyCadena.pop(2)
+		copyCadena.pop(5)
+		print(copyCadena)
+		p1 = getParidad(copyCadena)
+        
+		## Agregar bit de paridad en la cadena
+ 
+def isBinario(cadena):
+    binario = False
+    i = 0
+    for i in range (len(cadena)):
 
-def autocompletar(cadena):
-  ''' Buscamos las posiciones de los datos de paridad '''
-	# convertimos la cadena en lista
-	cadena = list(cadena)
+        if(cadena[i] == 1 or cadena[i] == 0):
+            #print("Es binario")
+            binario = True
+        else:
+            #print("No es binario")
+            return False
+        i = i+1
+    return binario
 
-	x = posicion = 0	
-	while posicion < len(cadena):
-		posicion = 2 ** x
-		# insertamos el valor de paridad
-		if posicion < len(cadena):
-			cadena.insert(posicion-1, "*")
-		else:
-			break
-		x += 1
+def getParidad(cadena):
+    unos = 0
+    i = 0
+    for i in range (len(cadena)):
+        if(i < len(cadena)):
+            if(cadena[i] == 1):
+                unos = unos + 1
+    if(unos % 2 == 0):
+        return "PAR"
+    return "IMPAR"
 
-	cadena = "".join(cadena)
-	return cadena
+
+if __name__== "__main__":
+    hamming([1,0,0,0,1,0,1])
